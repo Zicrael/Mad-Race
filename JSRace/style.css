@@ -3,9 +3,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;;
+    height: 100vh;
+    overflow: hidden;
 }
-.game-wrapper {
+#game-wrapper {
     height: 100vh;
     width: calc(100vw - 50px);
     max-width:  400px;
@@ -16,18 +17,19 @@ body {
     align-items: center;
     justify-content: center;
     background: url('./grass.png');
+    animation: moveRoad 2s linear  infinite;
 }
 
-.game-widnow {
+#game-widnow {
     background: url('./road.jpg');
     background-size: contain;
     width: 100%;
     height: 100%;
     display: flex;
     position: relative;
-    background-position-y: 0px;
+    animation: moveRoad 2s linear  infinite;
 }
-.score {
+#score {
     color: #000;
     font-size: 20px;
     position: absolute;
@@ -39,7 +41,7 @@ body {
     justify-content: space-between;
 }
 
-.buttons {
+#buttons {
     color: #000;
     font-size: 26px;
     position: absolute;
@@ -50,21 +52,23 @@ body {
     display: flex;
     justify-content: space-between;
 }
-.left-button {
+#left-button {
     border-right: 2px solid #ccc;
     width: 50%;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
-.left-button img {
+#left-button img {
     height: 42px;
 }
-.right-button {
+#right-button {
     width: 50%;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
-.right-button img {
+#right-button img {
     height: 42px;
 }
 
@@ -73,10 +77,11 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 #player {
-    height: 100px;
+    height: 126px;
     width: 60px;
     position: absolute;
     bottom: 75px;
@@ -85,9 +90,36 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     transform: rotate(180deg);
+    transition: all 1.2s ease-in;
+}
+.enemy {
+    height: 126px;
+    width: 60px;
+    position: absolute;
+    left : 75px;
+    background: url('./enemy_car.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(180deg);
+    transition: all 1.2s ease-in;
+    animation: enemyMove 2s linear infinite;
 }
 
-.smoke:first-child {
+.enemy .smoke {
+    width: 25px;
+    height: 30px;
+    position: absolute;
+    bottom: -25px;
+    left: 5px;
+    transform: rotate(180deg);
+    background: url('./smoke.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#player .smoke:first-child {
     width: 25px;
     height: 30px;
     position: absolute;
@@ -98,7 +130,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
-.smoke:last-child {
+#player .smoke:last-child {
     width: 25px;
     height: 30px;
     position: absolute;
@@ -108,4 +140,15 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+@keyframes moveRoad {
+    from { background-position-y: 0 }
+    to { background-position-y: 600px }
+}
+
+
+@keyframes enemyMove {
+    from { top: -150px }
+    to { top: 750px }
 }
