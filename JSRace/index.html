@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./style.css">
 <title>JSRide</title>
-    <body>
-        <div id='game-wrapper'>
-            <div id="game-widnow">
-                    <div class='road-part'>
+    <body class='d-flex'>
+        <div id='game-wrapper' class='d-flex'>
+            <div id="game-widnow" class='d-flex'>
+                    <div class='road-part d-flex'>
 
                     </div>
-                    <div class='road-part'>
+                    <div class='road-part d-flex'>
 
                     </div>
                     <div id='player'>
@@ -23,7 +23,7 @@
                                 
                             </div>
                     </div>
-                    <div id='score'>
+                    <div id='score' class='d-flex'>
                         <div id='user-score'>
                             Score: 0
                         </div>
@@ -31,14 +31,29 @@
                             Best: 0
                         </div>
                     </div>
-                    <div id='buttons'>
-                        <div id='left-button'>
+                    <div id='buttons' class='d-flex'>
+                        <div id='left-button' class='d-flex'>
                             <img src="https://png.icons8.com/windows/1600/long-arrow-left.png" alt="arrow-left">
                         </div>
-                        <div id='right-button'>
+                        <div id='right-button' class='d-flex'>
                             <img src="https://png.icons8.com/windows/1600/long-arrow-right.png" alt="arrow-left">
                         </div>
                     </div>
+            </div>
+            <div id='start-menu' class='d-flex'>
+                <div id='game-title'>
+                   <h1>JSRide<br> by Zicrael</h1> 
+                </div>
+                <div id='start-play-wrapper' class='d-flex'>
+                    <div id='start-play'>
+
+                    </div>
+                    <p>Push play button for start</p>
+                </div>
+                <div id='crated-by' class='d-flex'>
+                        <iframe src="https://ghbtns.com/github-btn.html?user=Zicrael&repo=ngx-tree-dnd&type=star&count=true" frameborder="0" scrolling="0" width="135px" height="20px"></iframe>
+                        <iframe src="https://ghbtns.com/github-btn.html?user=Zicrael&type=follow&count=true" frameborder="0" scrolling="0" width="135px" height="20px"></iframe> 
+                </div>
             </div>
         </div>
 
