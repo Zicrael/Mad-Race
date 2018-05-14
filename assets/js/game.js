@@ -8,33 +8,39 @@ let score = 0;
 let triggerDamageInterval;
 let scoreTriggerInterval;
 let spawnCarsInterval;
-const genetate = generator();
 
 document.querySelector('#start-play').addEventListener('click', () => {
-    build(true);
+    run();
+})
+document.querySelector('#restart-play').addEventListener('click', () => {
+    restartGame();
 })
 
-// build function
-function build(continueGenerate) {
-    if(continueGenerate) {
-        build(genetate.next().value);
-    } else {
-        player.style.opacity = '1';
-        document.querySelector('#start-menu').style.display = 'none';
-        document.querySelector('#buttons').style.display = 'flex';
-        document.querySelector('#score').style.display = 'flex';
+function run() {
+    const genetate = generator();
+    function* generator() {
+        yield startBuildRoads(); 
+        yield setPlayerPosition();
+        yield startTriggerScore();
+        yield setUserControl();
+        yield spawnEnemyCars();
+        yield setEffectDamage();
     }
+    function build(continueGenerate) {
+        if(continueGenerate) {
+            build(genetate.next().value);
+        } else {
+            player.style.bottom = '75px';
+            document.querySelector('#start-menu').style.display = 'none';
+            document.querySelector('#restart-menu').style.display = 'none';
+            document.querySelector('#buttons').style.display = 'flex';
+            document.querySelector('#score').style.display = 'flex';
+        }
+    }
+    build(true);
 }
 
-// generator
-function* generator() {
-    yield startBuildRoads(); 
-    yield setPlayerPosition();
-    yield startTriggerScore();
-    yield setUserControl();
-    yield spawnEnemyCars();
-    yield setEffectDamage();
-}
+// build function
 
 // build road
 function startBuildRoads() {
@@ -57,6 +63,7 @@ function setPlayerPosition() {
 
 // start trigger score
 function startTriggerScore() {
+    score = 0;
     let i = 0;
     const userScoreTable = document.querySelector('#user-score');
     const bestScore = localStorage.getItem('best_score');
@@ -76,8 +83,8 @@ function startTriggerScore() {
 // set user controller
 function setUserControl(disable) {
     if(!disable) {
-        document.querySelector('#left-button').addEventListener('click', rideLeft) 
-        document.querySelector('#right-button').addEventListener('click', rideRight)
+        document.querySelector('#left-button').addEventListener('click', rideLeft);
+        document.querySelector('#right-button').addEventListener('click', rideRight);
         document.onkeydown = checkKey;
         function checkKey(e) {
             e = e || window.event;
@@ -240,5 +247,18 @@ function gameOver(enemyCar) {
 }
 
 function restartGame() {
-    console.log('restart'); 
+    const restartMenu = document.querySelector('#restart-menu');
+    setDefaultStyles();
+    function setDefaultStyles() {
+        player.style.bottom = '-150px';
+        player.style.transform = 'rotate(180deg)';
+        document.querySelector('.burn').remove();
+        document.querySelector('#game-widnow').style.animation = 'moveRoad 2s linear  infinite';
+        document.querySelector('#game-wrapper').style.animation = 'moveRoad 2s linear  infinite';
+        restartMenu.style.opacity = '0';
+        setTimeout(() => {
+            restartMenu.style.display = 'none';
+            run();
+        }, 1000);
+    }
 }
