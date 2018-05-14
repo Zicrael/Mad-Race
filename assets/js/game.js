@@ -19,7 +19,10 @@ function build(continueGenerate) {
     if(continueGenerate) {
         build(genetate.next().value);
     } else {
+        player.style.opacity = '1';
         document.querySelector('#start-menu').style.display = 'none';
+        document.querySelector('#buttons').style.display = 'flex';
+        document.querySelector('#score').style.display = 'flex';
     }
 }
 
@@ -38,10 +41,8 @@ function startBuildRoads() {
     let i;
     for (roadPart of roadParts) {
         roadPart.style.width = `calc( 100% / ${roadParts.length} )`;
-        const obj = {player: false, enemy: false};
-        i = roadPart.offsetWidth;
     }
-        roadPartOffset = i;
+    roadPartOffset = roadParts[0].offsetWidth;
     return true;
 }
 
@@ -197,6 +198,7 @@ function gameOver(enemyCar) {
     const fire = document.createElement("div");
     fire.classList.add('burn');
     player.appendChild(fire);
+    player.style.left = '170px';
     if(enemyCar.right) {
         enemyCar.el.style.transform = 'rotate(-90deg)';
         player.style.transform = 'rotate(100deg)';
@@ -206,24 +208,37 @@ function gameOver(enemyCar) {
         player.style.transform = 'rotate(260deg)';
         enemyCar.el.style.left = '-500px';
     }
+    document.querySelector('#restart-menu').style.display = 'flex';
+    
     setTimeout(() => {
         document.querySelector('#game-widnow').style.animation = 'none';
         document.querySelector('#game-wrapper').style.animation = 'none';
-    }, 500);
+        document.querySelector('#buttons').style.display = 'none';
+        document.querySelector('#score').style.display = 'none';
+        document.querySelector('#restart-menu').style.opacity = '1';
+    }, 1000);
     setUserControl(true);
     checkUserScore(score);
     
     function checkUserScore(currentScore) {
+        const restartMenuScore = document.querySelector('#total-score-title');
         const bestScore = parseInt(localStorage.getItem('best_score'), null);
         if(bestScore) {
             if(currentScore > bestScore) {
                 localStorage.setItem('best_score', currentScore.toString());
                 document.querySelector("#best-score").innerHTML = `Best: ${currentScore}`;
+                restartMenuScore.innerHTML = `New best score: ${currentScore}`;
             } else {
+                restartMenuScore.innerHTML = `Score: ${currentScore}`;
                 return false;
             }
         } else {
+            restartMenuScore.innerHTML = `New best score: ${currentScore}`;
             localStorage.setItem('best_score', currentScore.toString());
         }
     }
+}
+
+function restartGame() {
+    console.log('restart'); 
 }
